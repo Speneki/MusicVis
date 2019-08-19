@@ -10,9 +10,9 @@ console.log('test')
 
 var frequencyData = new Uint8Array(200);
 
-var svgHeight = '300';
-var svgWidth = '1200';
-var barPadding = '1';
+var svgHeight = '500';
+var svgWidth = '1000';
+var barPadding = '.5';
 
 function createSvg(parent, height, width) {
     return d3.select(parent).append('svg').attr('height', height).attr('width', width);
@@ -20,7 +20,6 @@ function createSvg(parent, height, width) {
 
 var svg = createSvg('body', svgHeight, svgWidth);
 
-// Create our initial D3 chart.
 svg.selectAll('rect')
     .data(frequencyData)
     .enter()
@@ -33,22 +32,19 @@ svg.selectAll('rect')
     function renderChart() {
    requestAnimationFrame(renderChart);
 
-   // Copy frequency data to frequencyData array.
    analyser.getByteFrequencyData(frequencyData);
 
-   // Update d3 chart with new data.
    svg.selectAll('rect')
       .data(frequencyData)
       .attr('y', function(d) {
          return svgHeight - d;
       })
       .attr('height', function(d) {
-         return d;
+         return d * 2;
       })
       .attr('fill', function(d) {
-         return 'rgb(0, 0, ' + d + ')';
+         return 'rgb(100, 150, ' + d + ')';
       });
 }
 
-// Run the loop
 renderChart();
